@@ -14,7 +14,7 @@ class HistoryClient(object):
         self.port = port
         self.video_entity = {
             "id": "0xxxxxx",
-            "op": "op-tail-on",
+            "op": "op-download",
             "path": "/hadoop/rdnfile-1",
             "name": "rdnfile-1"
         }
@@ -75,6 +75,13 @@ def main():
     history_client = HistoryClient()
     logging.getLogger().setLevel(logging.INFO)
     if (len(sys.argv)) == 2:
+        if sys.argv[1] == "--help":
+            logging.info("Usage: python3 " + sys.argv[0] + " name" + " op" + " ip" + " port")
+            logging.info("    name: video name")
+            logging.info("    op:   operation, default value is " + history_client.video_entity["op"])
+            logging.info("    ip:   1m2m ip, default value is " + history_client.ip)
+            logging.info("    port: 1m2m port, default value is " + str(history_client.port))
+            exit()
         history_client.set_video_name(sys.argv[1])
         logging.info("video path:" + history_client.video_entity["path"])
         logging.info("default operation: " + history_client.video_entity["op"] + " ip: " + history_client.ip + " port:" + str(history_client.port))

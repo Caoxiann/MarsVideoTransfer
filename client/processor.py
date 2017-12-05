@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 import json
 import socket
 import cv2
@@ -333,21 +335,34 @@ class RealTimeServer(object):
         conn.close()
 
 
+def usage():
+    logging.info("Usage: python3 " + sys.argv[0] + " name ip")
+    logging.info("    name : Container Resource name, default value is a uuid string without -")
+    logging.info("    ip   : 1m2m ip, default is " + IP)
+
+
 def initial():
     logging.getLogger().setLevel(logging.INFO)
     global IP, VIDEO_IP
     if len(sys.argv) == 2:
+        if sys.argv[1] == "--help":
+            usage()
+            exit()
         reg_dict["name"] = sys.argv[1]
         logging.info("default 1m2m ip: " + IP)
     elif len(sys.argv) == 3:
         reg_dict["name"] = sys.argv[1]
         IP = sys.argv[2]
         VIDEO_IP = sys.argv[2]
+    elif len(sys.argv) == 1:
+        uuid_list = str(uuid.uuid1()).split("-")
+        name = str()
+        for u in uuid_list:
+            name += u
+        logging.info("Container Resource name (given by system randomly) : " + name)
+        reg_dict["name"] = name
     else:
-        logging.warning("Please input Container Resource name at lease...")
-        logging.info("Usage: python3 " + sys.argv[0] + " name ip")
-        logging.info("    name : Container Resource name")
-        logging.info("    ip   : 1m2m ip, default is " + IP)
+        usage()
         exit()
 
 

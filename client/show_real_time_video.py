@@ -61,14 +61,20 @@ def main():
     port = 9980
     logging.getLogger().setLevel(logging.INFO)
     if len(sys.argv) == 2:
+        if sys.argv[1] == "--help":
+            logging.warning("Please input Video Server ip at lease...")
+            logging.info("Usage: python3 " + sys.argv[0] + " ip port")
+            logging.info("    ip:   Real Time Server ip")
+            logging.info("    port: Real Time Server port, default value is " + str(port))
+            exit()
         ip = sys.argv[1]
         logging.info("default port: " + str(port))
     elif len(sys.argv) == 3:
         ip = sys.argv[1]
         port = int(sys.argv[2])
     else:
-        logging.warning("Please input Video Server ip...")
-        logging.info("Usage: " + sys.argv[0] + " ip port")
+        logging.warning("Please input Video Server ip at lease...")
+        logging.info("Usage: python3 " + sys.argv[0] + " ip port")
         logging.info("    ip:   Real Time Server ip")
         logging.info("    port: Real Time Server port, default value is " + str(port))
         exit()
